@@ -26,7 +26,7 @@ class Exp_ETTh(Exp_Basic):
         if self.args.features == 'S':
             in_dim = 1
         elif self.args.features == 'M':
-            in_dim = 7
+            in_dim = 21
         else:
             print('Error!')
 
