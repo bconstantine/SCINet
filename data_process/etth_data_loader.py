@@ -231,7 +231,7 @@ class Dataset_Custom(Dataset):
         #num_train = int(len(df_raw)*0.7)
         #num_test = int(len(df_raw)*0.2)
         #num_vali = len(df_raw) - num_train - num_test
-        num_test = 180
+        num_test = 183 #180 - pred len(24) + 1 = 157, since batch size = 157, we add to 183, so that it becomes 160, where 160%8 == 0
         num_vali = 42
         num_train = len(df_raw) - num_vali - num_test
         print(f"inside etth_data_loader train,test,vali: {num_train},{num_test}, {num_vali}")
