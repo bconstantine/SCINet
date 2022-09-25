@@ -305,7 +305,7 @@ class Exp_ETTh(Exp_Basic):
 
     def test(self, setting, evaluate=False):
         test_data, test_loader = self._get_data(flag='test')
-        
+        print(f"len of test in the function test = {len(test_data)}")
         self.model.eval()
         
         preds = []
