@@ -1,7 +1,5 @@
 log/
 model/
-datasets/
-dataset/
 *.txt
 *.pyc
 *.idea
