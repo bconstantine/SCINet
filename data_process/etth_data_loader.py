@@ -214,6 +214,7 @@ class Dataset_Custom(Dataset):
         self.scaler = StandardScaler()
         df_raw = pd.read_csv(os.path.join(self.root_path,
                                           self.data_path))
+        print(f"whole shape = {df_raw.shape}")
         '''
         df_raw.columns: ['date', ...(other features), target feature]
         '''

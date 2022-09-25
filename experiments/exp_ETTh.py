@@ -103,7 +103,7 @@ class Exp_ETTh(Exp_Basic):
             freq=freq,
             cols=args.cols
         )
-        print(flag, len(data_set))
+        print(flag, len(data_set)) 
         data_loader = DataLoader(
             data_set,
             batch_size=batch_size,
