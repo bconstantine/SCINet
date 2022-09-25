@@ -231,6 +231,7 @@ class Dataset_Custom(Dataset):
         num_train = int(len(df_raw)*0.7)
         num_test = int(len(df_raw)*0.2)
         num_vali = len(df_raw) - num_train - num_test
+        print(f"inside etth_data_loader train,test,vali: {num_train},{num_test}, {num_vali}")
         border1s = [0, num_train-self.seq_len, len(df_raw)-num_test-self.seq_len]
         border2s = [num_train, num_train+num_vali, len(df_raw)]
         border1 = border1s[self.set_type]
@@ -254,11 +255,15 @@ class Dataset_Custom(Dataset):
         data_stamp = time_features(df_stamp, timeenc=self.timeenc, freq=self.freq)
 
         self.data_x = data[border1:border2]
+        print(f"inside etth_data_loader len of data_x: {len(self.data_x)}")
         if self.inverse:
             self.data_y = df_data.values[border1:border2]
+            print("enter inverse")
         else:
             self.data_y = data[border1:border2]
+        print(f"inside etth_data_loader len of data_y: {len(self.data_y)}")
         self.data_stamp = data_stamp
+        print(f"inside etth_data_loader len of data_stamp: {len(self.data_stamp)}")
     
     def __getitem__(self, index):
         s_begin = index
