@@ -27,6 +27,18 @@ class Exp_ETTh(Exp_Basic):
             in_dim = 1
         elif self.args.features == 'M':
             in_dim = 21
+            if self.args.data == 'ALL' or self.args.data == 'ALL_CUT':
+                in_dim = 21
+            elif self.args.data == 'No_MonthSincCos' or self.args.data == 'No_MonthSincCos_CUT':
+                in_dim = 15
+            elif self.args.data == 'No_EFA_MonthSinCos' or self.args.data == 'No_EFA_MonthSinCos_CUT':
+                in_dim = 13
+            elif self.args.data == 'No_EFA_Day_MonthSinCos' or self.args.data == 'No_EFA_Day_MonthSinCos_CUT':
+                in_dim = 12
+            elif self.args.data == 'July_Important_Variable' or self.args.data == 'July_Important_Variable_CUT':
+                in_dim = 11
+            elif self.args.data == 'July_High_Correlation_Table' or self.args.data == 'July_High_Correlation_Table_CUT':
+                in_dim = 8
         else:
             print('Error!')
 
@@ -80,6 +92,18 @@ class Exp_ETTh(Exp_Basic):
             'Solar':Dataset_Custom,
             'custom':Dataset_Custom,
             'delta': Dataset_Custom,
+            'ALL': Dataset_Custom,
+            'No_MonthSinCos': Dataset_Custom, 
+            'No_EFA_MonthSinCos': Dataset_Custom,
+            'No_EFA_Day_MonthSinCos': Dataset_Custom,
+            'July_Important_Variable': Dataset_Custom,
+            'July_High_Correlation_Table': Dataset_Custom,
+            'ALL_CUT': Dataset_Custom,
+            'No_MonthSinCos_CUT': Dataset_Custom, 
+            'No_EFA_MonthSinCos_CUT': Dataset_Custom,
+            'No_EFA_Day_MonthSinCos_CUT': Dataset_Custom,
+            'July_Important_Variable_CUT': Dataset_Custom,
+            'July_High_Correlation_Table_CUT': Dataset_Custom,
         }
         Data = data_dict[self.args.data]
         timeenc = 0 if args.embed!='timeF' else 1

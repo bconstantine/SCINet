@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser(description='SCINet on ETT dataset')
 
 parser.add_argument('--model', type=str, required=False, default='SCINet', help='model of the experiment')
 ### -------  dataset settings --------------
-parser.add_argument('--data', type=str, required=False, default='ETTh1', choices=['ETTh1', 'ETTh2', 'ETTm1', 'delta'], help='name of dataset')
+parser.add_argument('--data', type=str, required=False, default='ETTh1', choices=['ETTh1', 'ETTh2', 'ETTm1', 'delta', 'ALL', 'No_MonthSincCos', 'No_EFA_MonthSinCos', 'No_EFA_MonthSinCos', 'No_EFA_Day_MonthSinCos', 'July_Important_Variable', 'July_High_Correlation_Table', 'ALL_CUT', 'No_MonthSincCos_CUT', 'No_EFA_MonthSinCos_CUT', 'No_EFA_MonthSinCos_CUT', 'No_EFA_Day_MonthSinCos_CUT', 'July_Important_Variable_CUT', 'July_High_Correlation_Table_CUT'], help='name of dataset')
 parser.add_argument('--root_path', type=str, default='./datasets/ETT-data/', help='root path of the data file')
 parser.add_argument('--data_path', type=str, default='ETTh1.csv', help='location of the data file')
 parser.add_argument('--features', type=str, default='M', choices=['S', 'M'], help='features S is univariate, M is multivariate')
@@ -86,8 +86,23 @@ data_parser = {
     'WTH': {'data': 'WTH.csv', 'T': 'WetBulbCelsius', 'M': [12, 12, 12], 'S': [1, 1, 1], 'MS': [12, 12, 1]},
     'ECL': {'data': 'ECL.csv', 'T': 'MT_320', 'M': [321, 321, 321], 'S': [1, 1, 1], 'MS': [321, 321, 1]},
     'Solar': {'data': 'solar_AL.csv', 'T': 'POWER_136', 'M': [137, 137, 137], 'S': [1, 1, 1], 'MS': [137, 137, 1]},
-    'delta': {'data': 'DCL_transform_0909_edited.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]}
+    'delta': {'data': 'DCL_transform_0909_edited.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]}, 
+    'ALL': {'data': 'DCL_transform_0909_edited_ALL.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'No_MonthSinCos': {'data': 'DCL_transform_0909_edited_No_MonthSinCos.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]}, 
+    'No_EFA_MonthSinCos': {'data': 'DCL_transform_0909_edited_No_EFA_MonthSinCos.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'No_EFA_Day_MonthSinCos': {'data': 'DCL_transform_0909_edited_No_EFA_Day_MonthSinCos.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'July_Important_Variable': {'data': 'DCL_transform_0909_edited_July_Important_Variable.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'July_High_Correlation_Table': {'data': 'DCL_transform_0909_edited_July_High_Correlation_Table.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'ALL_CUT': {'data': 'DCL_transform_0909_edited_ALL.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'No_MonthSinCos_CUT': {'data': 'DCL_transform_0909_cut_No_MonthSinCos.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]}, 
+    'No_EFA_MonthSinCos_CUT': {'data': 'DCL_transform_0909_cut_No_EFA_MonthSinCos.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'No_EFA_Day_MonthSinCos_CUT': {'data': 'DCL_transform_0909_cut_No_EFA_Day_MonthSinCos.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'July_Important_Variable_CUT': {'data': 'DCL_transform_0909_cut_July_Important_Variable.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'July_High_Correlation_Table_CUT': {'data': 'DCL_transform_0909_cut_July_High_Correlation_Table.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
 }
+
+
+
 if args.data in data_parser.keys():
     data_info = data_parser[args.data]
     args.data_path = data_info['data']
