@@ -29,7 +29,7 @@ class Exp_ETTh(Exp_Basic):
             in_dim = 21
             if self.args.data == 'ALL' or self.args.data == 'ALL_CUT':
                 in_dim = 17
-            elif self.args.data == 'No_MonthSincCos' or self.args.data == 'No_MonthSincCos_CUT':
+            elif self.args.data == 'No_MonthSinCos' or self.args.data == 'No_MonthSinCos_CUT':
                 in_dim = 15
             elif self.args.data == 'No_EFA_MonthSinCos' or self.args.data == 'No_EFA_MonthSinCos_CUT':
                 in_dim = 13
