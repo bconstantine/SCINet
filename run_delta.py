@@ -93,7 +93,7 @@ data_parser = {
     'No_EFA_Day_MonthSinCos': {'data': 'DCL_transform_0909_edited_No_EFA_Day_MonthSinCos.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
     'July_Important_Variable': {'data': 'DCL_transform_0909_edited_July_Important_Variable.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
     'July_High_Correlation_Table': {'data': 'DCL_transform_0909_edited_July_High_Correlation_Table.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
-    'ALL_CUT': {'data': 'DCL_transform_0909_edited_ALL.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'ALL_CUT': {'data': 'DCL_transform_0909_cut_ALL.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
     'No_MonthSinCos_CUT': {'data': 'DCL_transform_0909_cut_No_MonthSinCos.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]}, 
     'No_EFA_MonthSinCos_CUT': {'data': 'DCL_transform_0909_cut_No_EFA_MonthSinCos.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
     'No_EFA_Day_MonthSinCos_CUT': {'data': 'DCL_transform_0909_cut_No_EFA_Day_MonthSinCos.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
