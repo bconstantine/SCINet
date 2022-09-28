@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser(description='SCINet on ETT dataset')
 
 parser.add_argument('--model', type=str, required=False, default='SCINet', help='model of the experiment')
 ### -------  dataset settings --------------
-parser.add_argument('--data', type=str, required=False, default='ETTh1', choices=['ETTh1', 'ETTh2', 'ETTm1', 'delta', 'ALL', 'No_MonthSinCos', 'No_EFA_MonthSinCos', 'No_EFA_MonthSinCos', 'No_EFA_Day_MonthSinCos', 'July_Important_Variable', 'July_High_Correlation_Table', 'ALL_CUT', 'No_MonthSinCos_CUT', 'No_EFA_MonthSinCos_CUT', 'No_EFA_MonthSinCos_CUT', 'No_EFA_Day_MonthSinCos_CUT', 'July_Important_Variable_CUT', 'July_High_Correlation_Table_CUT'], help='name of dataset')
+parser.add_argument('--data', type=str, required=False, default='ETTh1', choices=['ETTh1', 'ETTh2', 'ETTm1', 'delta', 'ALL', 'No_MonthSinCos', 'No_EFA_MonthSinCos', 'No_EFA_MonthSinCos', 'No_EFA_Day_MonthSinCos', 'July_Important_Variable', 'July_High_Correlation_Table', 'ALL_CUT', 'No_MonthSinCos_CUT', 'No_EFA_MonthSinCos_CUT', 'No_EFA_MonthSinCos_CUT', 'No_EFA_Day_MonthSinCos_CUT', 'July_Important_Variable_CUT', 'July_High_Correlation_Table_CUT', 'ALL_July', 'No_MonthSinCos_July', 'No_EFA_MonthSinCos_July', 'No_EFA_MonthSinCos_July', 'No_EFA_Day_MonthSinCos_July', 'July_Important_Variable_July', 'July_High_Correlation_Table_July', 'ALL_CUT_July', 'No_MonthSinCos_CUT_July', 'No_EFA_MonthSinCos_CUT_July', 'No_EFA_MonthSinCos_CUT_July', 'No_EFA_Day_MonthSinCos_CUT_July', 'July_Important_Variable_CUT_July', 'July_High_Correlation_Table_CUT_July'], help='name of dataset')
 parser.add_argument('--root_path', type=str, default='./datasets/ETT-data/', help='root path of the data file')
 parser.add_argument('--data_path', type=str, default='ETTh1.csv', help='location of the data file')
 parser.add_argument('--features', type=str, default='M', choices=['S', 'M'], help='features S is univariate, M is multivariate')
@@ -99,6 +99,18 @@ data_parser = {
     'No_EFA_Day_MonthSinCos_CUT': {'data': 'DCL_transform_0909_cut_No_EFA_Day_MonthSinCos.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
     'July_Important_Variable_CUT': {'data': 'DCL_transform_0909_cut_July_Important_Variable.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
     'July_High_Correlation_Table_CUT': {'data': 'DCL_transform_0909_cut_July_High_Correlation_Table.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'ALL_July': {'data': 'DCL_transform_0909_edited_ALL_July.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'No_MonthSinCos_July': {'data': 'DCL_transform_0909_edited_No_MonthSinCos_July.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]}, 
+    'No_EFA_MonthSinCos_July': {'data': 'DCL_transform_0909_edited_No_EFA_MonthSinCos_July.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'No_EFA_Day_MonthSinCos_July': {'data': 'DCL_transform_0909_edited_No_EFA_Day_MonthSinCos_July.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'July_Important_Variable_July': {'data': 'DCL_transform_0909_edited_July_Important_Variable_July.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'July_High_Correlation_Table_July': {'data': 'DCL_transform_0909_edited_July_High_Correlation_Table_July.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'ALL_CUT_July': {'data': 'DCL_transform_0909_cut_ALL_July.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'No_MonthSinCos_CUT_July': {'data': 'DCL_transform_0909_cut_No_MonthSinCos_July.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]}, 
+    'No_EFA_MonthSinCos_CUT_July': {'data': 'DCL_transform_0909_cut_No_EFA_MonthSinCos_July.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'No_EFA_Day_MonthSinCos_CUT_July': {'data': 'DCL_transform_0909_cut_No_EFA_Day_MonthSinCos_July.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'July_Important_Variable_CUT_July': {'data': 'DCL_transform_0909_cut_July_Important_Variable_July.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'July_High_Correlation_Table_CUT_July': {'data': 'DCL_transform_0909_cut_July_High_Correlation_Table_July.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
 }
 
 

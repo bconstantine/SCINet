@@ -39,6 +39,18 @@ class Exp_ETTh(Exp_Basic):
                 in_dim = 11
             elif self.args.data == 'July_High_Correlation_Table' or self.args.data == 'July_High_Correlation_Table_CUT':
                 in_dim = 8
+            elif self.args.data == 'ALL_July' or self.args.data == 'ALL_CUT_July':
+                in_dim = 17
+            elif self.args.data == 'No_MonthSinCos_July' or self.args.data == 'No_MonthSinCos_CUT_July':
+                in_dim = 15
+            elif self.args.data == 'No_EFA_MonthSinCos_July' or self.args.data == 'No_EFA_MonthSinCos_CUT_July':
+                in_dim = 13
+            elif self.args.data == 'No_EFA_Day_MonthSinCos_July' or self.args.data == 'No_EFA_Day_MonthSinCos_CUT_July':
+                in_dim = 12
+            elif self.args.data == 'July_Important_Variable_July' or self.args.data == 'July_Important_Variable_CUT_July':
+                in_dim = 11
+            elif self.args.data == 'July_High_Correlation_Table_July' or self.args.data == 'July_High_Correlation_Table_CUT_July':
+                in_dim = 8
         else:
             print('Error!')
 
@@ -104,6 +116,18 @@ class Exp_ETTh(Exp_Basic):
             'No_EFA_Day_MonthSinCos_CUT': Dataset_Custom,
             'July_Important_Variable_CUT': Dataset_Custom,
             'July_High_Correlation_Table_CUT': Dataset_Custom,
+            'ALL_July': Dataset_Custom,
+            'No_MonthSinCos_July': Dataset_Custom, 
+            'No_EFA_MonthSinCos_July': Dataset_Custom,
+            'No_EFA_Day_MonthSinCos_July': Dataset_Custom,
+            'July_Important_Variable_July': Dataset_Custom,
+            'July_High_Correlation_Table_July': Dataset_Custom,
+            'ALL_CUT_July': Dataset_Custom,
+            'No_MonthSinCos_CUT_July': Dataset_Custom, 
+            'No_EFA_MonthSinCos_CUT_July': Dataset_Custom,
+            'No_EFA_Day_MonthSinCos_CUT_July': Dataset_Custom,
+            'July_Important_Variable_CUT_July': Dataset_Custom,
+            'July_High_Correlation_Table_CUT_July': Dataset_Custom,
         }
         Data = data_dict[self.args.data]
         timeenc = 0 if args.embed!='timeF' else 1
