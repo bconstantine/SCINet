@@ -26,57 +26,57 @@ class Exp_ETTh(Exp_Basic):
         if self.args.features == 'S':
             in_dim = 1
         elif self.args.features == 'M':
-            # in_dim = 21
-            # if self.args.data == 'ALL' or self.args.data == 'ALL_CUT':
-            #     in_dim = 17
-            # elif self.args.data == 'No_MonthSinCos' or self.args.data == 'No_MonthSinCos_CUT':
-            #     in_dim = 15
-            # elif self.args.data == 'No_EFA_MonthSinCos' or self.args.data == 'No_EFA_MonthSinCos_CUT':
-            #     in_dim = 13
-            # elif self.args.data == 'No_EFA_Day_MonthSinCos' or self.args.data == 'No_EFA_Day_MonthSinCos_CUT':
-            #     in_dim = 12
-            # elif self.args.data == 'July_Important_Variable' or self.args.data == 'July_Important_Variable_CUT':
-            #     in_dim = 11
-            # elif self.args.data == 'July_High_Correlation_Table' or self.args.data == 'July_High_Correlation_Table_CUT':
-            #     in_dim = 8
-            # elif self.args.data == 'ALL_July' or self.args.data == 'ALL_CUT_July':
-            #     in_dim = 17
-            # elif self.args.data == 'No_MonthSinCos_July' or self.args.data == 'No_MonthSinCos_CUT_July':
-            #     in_dim = 15
-            # elif self.args.data == 'No_EFA_MonthSinCos_July' or self.args.data == 'No_EFA_MonthSinCos_CUT_July':
-            #     in_dim = 13
-            # elif self.args.data == 'No_EFA_Day_MonthSinCos_July' or self.args.data == 'No_EFA_Day_MonthSinCos_CUT_July':
-            #     in_dim = 12
-            # elif self.args.data == 'July_Important_Variable_July' or self.args.data == 'July_Important_Variable_CUT_July':
-            #     in_dim = 11
-            # elif self.args.data == 'July_High_Correlation_Table_July' or self.args.data == 'July_High_Correlation_Table_CUT_July':
-            #     in_dim = 8
-
-            in_dim = 22
+            in_dim = 21
             if self.args.data == 'ALL' or self.args.data == 'ALL_CUT':
-                in_dim = 18
+                in_dim = 17
             elif self.args.data == 'No_MonthSinCos' or self.args.data == 'No_MonthSinCos_CUT':
-                in_dim = 16
+                in_dim = 15
             elif self.args.data == 'No_EFA_MonthSinCos' or self.args.data == 'No_EFA_MonthSinCos_CUT':
-                in_dim = 14
+                in_dim = 13
             elif self.args.data == 'No_EFA_Day_MonthSinCos' or self.args.data == 'No_EFA_Day_MonthSinCos_CUT':
-                in_dim = 13
+                in_dim = 12
             elif self.args.data == 'July_Important_Variable' or self.args.data == 'July_Important_Variable_CUT':
-                in_dim = 12
+                in_dim = 11
             elif self.args.data == 'July_High_Correlation_Table' or self.args.data == 'July_High_Correlation_Table_CUT':
-                in_dim = 9
+                in_dim = 8
             elif self.args.data == 'ALL_July' or self.args.data == 'ALL_CUT_July':
-                in_dim = 18
+                in_dim = 17
             elif self.args.data == 'No_MonthSinCos_July' or self.args.data == 'No_MonthSinCos_CUT_July':
-                in_dim = 16
+                in_dim = 15
             elif self.args.data == 'No_EFA_MonthSinCos_July' or self.args.data == 'No_EFA_MonthSinCos_CUT_July':
-                in_dim = 14
-            elif self.args.data == 'No_EFA_Day_MonthSinCos_July' or self.args.data == 'No_EFA_Day_MonthSinCos_CUT_July':
                 in_dim = 13
-            elif self.args.data == 'July_Important_Variable_July' or self.args.data == 'July_Important_Variable_CUT_July':
+            elif self.args.data == 'No_EFA_Day_MonthSinCos_July' or self.args.data == 'No_EFA_Day_MonthSinCos_CUT_July':
                 in_dim = 12
+            elif self.args.data == 'July_Important_Variable_July' or self.args.data == 'July_Important_Variable_CUT_July':
+                in_dim = 11
             elif self.args.data == 'July_High_Correlation_Table_July' or self.args.data == 'July_High_Correlation_Table_CUT_July':
-                in_dim = 9
+                in_dim = 8
+
+            # in_dim = 22
+            # if self.args.data == 'ALL' or self.args.data == 'ALL_CUT':
+            #     in_dim = 18
+            # elif self.args.data == 'No_MonthSinCos' or self.args.data == 'No_MonthSinCos_CUT':
+            #     in_dim = 16
+            # elif self.args.data == 'No_EFA_MonthSinCos' or self.args.data == 'No_EFA_MonthSinCos_CUT':
+            #     in_dim = 14
+            # elif self.args.data == 'No_EFA_Day_MonthSinCos' or self.args.data == 'No_EFA_Day_MonthSinCos_CUT':
+            #     in_dim = 13
+            # elif self.args.data == 'July_Important_Variable' or self.args.data == 'July_Important_Variable_CUT':
+            #     in_dim = 12
+            # elif self.args.data == 'July_High_Correlation_Table' or self.args.data == 'July_High_Correlation_Table_CUT':
+            #     in_dim = 9
+            # elif self.args.data == 'ALL_July' or self.args.data == 'ALL_CUT_July':
+            #     in_dim = 18
+            # elif self.args.data == 'No_MonthSinCos_July' or self.args.data == 'No_MonthSinCos_CUT_July':
+            #     in_dim = 16
+            # elif self.args.data == 'No_EFA_MonthSinCos_July' or self.args.data == 'No_EFA_MonthSinCos_CUT_July':
+            #     in_dim = 14
+            # elif self.args.data == 'No_EFA_Day_MonthSinCos_July' or self.args.data == 'No_EFA_Day_MonthSinCos_CUT_July':
+            #     in_dim = 13
+            # elif self.args.data == 'July_Important_Variable_July' or self.args.data == 'July_Important_Variable_CUT_July':
+            #     in_dim = 12
+            # elif self.args.data == 'July_High_Correlation_Table_July' or self.args.data == 'July_High_Correlation_Table_CUT_July':
+            #     in_dim = 9
         else:
             print('Error!')
 
