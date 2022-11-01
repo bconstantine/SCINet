@@ -21,6 +21,8 @@ class Exp_ETTh(Exp_Basic):
     def __init__(self, args):
         super(Exp_ETTh, self).__init__(args)
     
+    def custom_loss_function(ypred, ytrue):
+        pass
     def _build_model(self):
 
         if self.args.features == 'S':
@@ -55,6 +57,10 @@ class Exp_ETTh(Exp_Basic):
                 in_dim = 18
             elif self.args.data == 'July_High_Correlation_Table_TEMP' or self.args.data == 'July_High_Correlation_Table_CUT_TEMP':
                 in_dim = 9
+            elif self.args.data == 'ALL_TEMP_WIND' or self.args.data == 'ALL_CUT_TEMP_WIND':
+                in_dim = 19
+            elif self.args.data == 'July_High_Correlation_Table_TEMP_WIND' or self.args.data == 'July_High_Correlation_Table_CUT_TEMP_WIND':
+                in_dim = 10
             # in_dim = 22
             # if self.args.data == 'ALL' or self.args.data == 'ALL_CUT':
             #     in_dim = 18
@@ -161,6 +167,10 @@ class Exp_ETTh(Exp_Basic):
             'July_High_Correlation_Table_TEMP': Dataset_Custom,
             'ALL_CUT_TEMP': Dataset_Custom,
             'July_High_Correlation_Table_CUT_TEMP': Dataset_Custom,
+            'ALL_TEMP_WIND': Dataset_Custom,
+            'July_High_Correlation_Table_TEMP_WIND': Dataset_Custom,
+            'ALL_CUT_TEMP_WIND': Dataset_Custom,
+            'July_High_Correlation_Table_CUT_TEMP_WIND': Dataset_Custom,
         }
         Data = data_dict[self.args.data]
         timeenc = 0 if args.embed!='timeF' else 1
@@ -184,9 +194,7 @@ class Exp_ETTh(Exp_Basic):
             freq=freq,
             cols=args.cols
         )
-        print("squeeze1")
         print(flag, len(data_set)) 
-        print("squeeze2")
         data_loader = DataLoader(
             data_set,
             batch_size=batch_size,
@@ -205,6 +213,9 @@ class Exp_ETTh(Exp_Basic):
             criterion = nn.MSELoss()
         elif losstype == "mae":
             criterion = nn.L1Loss()
+        elif losstype == "custom1":
+            print("Custom loss function1")
+            criterion = self.custom_loss_function()
         else:
             criterion = nn.L1Loss()
         return criterion
