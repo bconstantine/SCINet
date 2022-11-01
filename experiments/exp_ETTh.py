@@ -61,6 +61,10 @@ class Exp_ETTh(Exp_Basic):
                 in_dim = 19
             elif self.args.data == 'July_High_Correlation_Table_TEMP_WIND' or self.args.data == 'July_High_Correlation_Table_CUT_TEMP_WIND':
                 in_dim = 10
+            elif self.args.data == 'August_High_Correlation_TEMP_WIND':
+                in_dim = 10
+            elif self.args.data == 'August_High_Correlation_TEMP':
+                in_dim = 9
             # in_dim = 22
             # if self.args.data == 'ALL' or self.args.data == 'ALL_CUT':
             #     in_dim = 18
@@ -171,6 +175,8 @@ class Exp_ETTh(Exp_Basic):
             'July_High_Correlation_Table_TEMP_WIND': Dataset_Custom,
             'ALL_CUT_TEMP_WIND': Dataset_Custom,
             'July_High_Correlation_Table_CUT_TEMP_WIND': Dataset_Custom,
+            'August_High_Correlation_TEMP_WIND': Dataset_Custom, 
+            'August_High_Correlation_TEMP': Dataset_Custom,
         }
         Data = data_dict[self.args.data]
         timeenc = 0 if args.embed!='timeF' else 1
