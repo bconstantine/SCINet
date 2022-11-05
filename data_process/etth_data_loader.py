@@ -237,8 +237,10 @@ class Dataset_Custom(Dataset):
         print(f"inside etth_data_loader train,test,vali: {num_train},{num_test}, {num_vali}")
         border1s = [0, num_train-self.seq_len, len(df_raw)-num_test-self.seq_len]
         border2s = [num_train, num_train+num_vali, len(df_raw)]
-        print(f'border1s: ' + border1s)
-        print(f'border2s: ' + border2s)
+        print(f'border1s: ')
+        print(border1s)
+        print(f'border2s: ')
+        print(border2s)
         border1 = border1s[self.set_type]
         border2 = border2s[self.set_type]
         
