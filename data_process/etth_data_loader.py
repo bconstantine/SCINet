@@ -231,10 +231,11 @@ class Dataset_Custom(Dataset):
         #num_train = int(len(df_raw)*0.7)
         #num_test = int(len(df_raw)*0.2)
         #num_vali = len(df_raw) - num_train - num_test
-        num_test = 180+(6-(180-self.pred_len+1)%6) #186 - pred len(24) + 1 = 157, since batch size = 157, we add to 183, so that it becomes 160, where 160%8 == 0
-        #num_test = 180
+        num_test = 180+(6-(180-self.pred_len+1)%6) #180 - pred len(6) + 1 = 175, since batch size = 175 not completely divisible by batch size, 
+                                                   #we add 5 extra data, so that it becomes 185
+                                                   #so that 185 - pred len(6) + 1 = 180, completely divisible by batch size (6)
+        
         num_vali = 42+(6-(42-self.pred_len+1)%6)
-        #num_vali = 42
         num_train = len(df_raw) - num_vali - num_test
         print(f"inside etth_data_loader train,test,vali: {num_train},{num_test}, {num_vali}")
         border1s = [0, num_train-self.seq_len, len(df_raw)-num_test-self.seq_len]
@@ -278,8 +279,8 @@ class Dataset_Custom(Dataset):
         index = index - (index%6)
         s_begin = index
         s_end = s_begin + self.seq_len
-        r_begin = s_end - self.label_len 
-        r_end = r_begin + self.label_len + self.pred_len
+        r_begin = s_end
+        r_end = r_begin + self.pred_len
 
         seq_x = self.data_x[s_begin:s_end]
         seq_y = self.data_y[r_begin:r_end]
