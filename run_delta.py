@@ -174,7 +174,7 @@ torch.manual_seed(4321)  # reproducible
 torch.cuda.manual_seed_all(4321)
 torch.backends.cudnn.benchmark = False
 torch.backends.cudnn.deterministic = True  # Can change it to False --> default: False
-torch.backends.cudnn.enabled = True
+torch.backends.cudnn.enabled = False
 
 Exp = Exp_ETTh
 
