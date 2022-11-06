@@ -235,7 +235,7 @@ class Dataset_Custom(Dataset):
         num_vali = 42+(6-(42-self.pred_len+1)%6)
         num_train = len(df_raw) - num_vali - num_test
         print(f"inside etth_data_loader train,test,vali: {num_train},{num_test}, {num_vali}")
-        border1s = [0, num_train-self.seq_len, len(df_raw)-num_test-self.seq_len]
+        border1s = [0, num_train-self.seq_len, len(df_raw)-num_test-self.seq_len-1]
         border2s = [num_train, num_train+num_vali, len(df_raw)]
         print(f'border1s: ')
         print(border1s)
