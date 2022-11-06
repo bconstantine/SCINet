@@ -243,6 +243,10 @@ class Dataset_Custom(Dataset):
         num_vali = 42 + 6 - (42 % 6)
         num_train = len(df_raw)- num_test - num_vali
 
+        print(num_test)
+        print(num_vali)
+        print(num_train)
+
         print(f"inside etth_data_loader train,test,vali: {num_train},{num_test}, {num_vali}")
         border1s = [0, num_train-self.seq_len, len(df_raw)-num_test-self.seq_len]
         border2s = [num_train, num_train+num_vali, len(df_raw)]
@@ -285,8 +289,8 @@ class Dataset_Custom(Dataset):
         index = index - (index%6)
         s_begin = index
         s_end = s_begin + self.seq_len
-        r_begin = s_end
-        r_end = r_begin + self.pred_len
+        r_begin = s_end - self.label_len
+        r_end = r_begin + self.pred_len + self.label_len
 
         seq_x = self.data_x[s_begin:s_end]
         seq_y = self.data_y[r_begin:r_end]
