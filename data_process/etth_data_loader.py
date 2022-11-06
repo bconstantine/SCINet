@@ -239,11 +239,9 @@ class Dataset_Custom(Dataset):
         #num_vali = 42+(6-(42-self.pred_len+1)%6)
         #num_train = len(df_raw) - num_vali - num_test
 
-        testPercentage = 180/len(df_raw)
-        validationPercentage = 42/len(df_raw)
-        num_train = int(len(df_raw)*testPercentage)
-        num_test = int(len(df_raw)*validationPercentage)
-        num_vali = len(df_raw) - num_train - num_test
+        num_test = 180 + 6 - (180 % 6)
+        num_vali = 42 + 6 - (42 % 6)
+        num_train = len(df_raw)- num_test - num_vali
 
         print(f"inside etth_data_loader train,test,vali: {num_train},{num_test}, {num_vali}")
         border1s = [0, num_train-self.seq_len, len(df_raw)-num_test-self.seq_len]
