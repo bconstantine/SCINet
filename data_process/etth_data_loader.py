@@ -232,16 +232,16 @@ class Dataset_Custom(Dataset):
         #num_test = int(len(df_raw)*0.2)
         #num_vali = len(df_raw) - num_train - num_test
 
-        #num_test = 180+(6-(180-self.pred_len+1)%6) #180 - pred len(6) + 1 = 175, since batch size = 175 not completely divisible by batch size, 
+        num_test = 180+(6-(180-self.pred_len+1)%6) #180 - pred len(6) + 1 = 175, since batch size = 175 not completely divisible by batch size, 
                                                    #we add 5 extra data, so that it becomes 185
                                                    #so that 185 - pred len(6) + 1 = 180, completely divisible by batch size (6)
         
-        #num_vali = 42+(6-(42-self.pred_len+1)%6)
-        #num_train = len(df_raw) - num_vali - num_test
+        num_vali = 42+(6-(42-self.pred_len+1)%6)
+        num_train = len(df_raw) - num_vali - num_test
 
-        num_test = 180 + 6 - (180 % 6)
-        num_vali = 42 + 6 - (42 % 6)
-        num_train = len(df_raw)- num_test - num_vali
+        #num_test = 180 + 6 - (180 % 6)
+        #num_vali = 42 + 6 - (42 % 6)
+        #num_train = len(df_raw)- num_test - num_vali
 
         print(num_test)
         print(num_vali)
