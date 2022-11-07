@@ -17,20 +17,27 @@ from metrics.ETTh_metrics import metric
 from models.SCINet import SCINet
 from models.SCINet_decompose import SCINet_decompose
 
-def UncertaintyLoss(logits, ground_truths):
+def UncertaintyLoss(logits, groundtruths):
     loss1 = nn.MSELoss()
-    MSE = loss1(logits, ground_truths)
+    MSE = loss1(logits, groundtruths)
     outputOnlyMask = torch.zeros_like(logits,  dtype=torch.bool)
     logitsShapeList = list(logits.shape)
     for i in range(logitsShapeList[0]):
         for j in range(logitsShapeList[1]):
             outputOnlyMask[i,j,-1] = True
     logitsOutputOnly = torch.masked_select(logits, outputOnlyMask)
+    groundtruthsOutputOnly = torch.masked_select(groundtruths, outputOnlyMask)
+    winningMask = torch.ge(groundtruthsOutputOnly, logitsOutputOnly)
+    logitsProfitOnly = torch.masked_select(logitsOutputOnly, winningMask)
+    profit = torch.sum(logitsProfitOnly)
+    winningMaskInt = winningMask.int()
+    winningRate = torch.mean(winningMaskInt)
+    print(f"winningRate: {winningRate.item()}")
+    print(f"profit: {profit.item()}")
     print(f"logitsOutputOnly shape: {logitsOutputOnly.shape}")
     print(f"logits shape: {logits.shape}")
-    print(f"ground_truths shape: {ground_truths.shape}")
-    return 0
-
+    print(f"ground_truths shape: {groundtruths.shape}")
+    return MSE
 """
 class UncertaintyLoss():
     def get_loss(logits, ground_truths):
