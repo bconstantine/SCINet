@@ -262,7 +262,7 @@ class Exp_ETTh(Exp_Basic):
             criterion = nn.L1Loss()
         elif losstype == "UncertaintyLoss":
             print("Custom loss function1")
-            criterion = UncertaintyLoss()
+            criterion = UncertaintyLoss
         else:
             criterion = nn.L1Loss()
         return criterion
