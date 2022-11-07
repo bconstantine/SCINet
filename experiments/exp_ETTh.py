@@ -18,7 +18,8 @@ from models.SCINet import SCINet
 from models.SCINet_decompose import SCINet_decompose
 
 def UncertaintyLoss(logits, ground_truths):
-    MSE = nn.MSELoss(logits, ground_truths)
+    loss1 = nn.MSELoss()
+    MSE = loss1(logits, ground_truths)
     outputOnlyMask = torch.zeros_like(logits)
     logitsShapeList = list(logits.shape)
     for i in range(logitsShapeList[0]):
