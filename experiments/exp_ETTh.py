@@ -17,27 +17,52 @@ from metrics.ETTh_metrics import metric
 from models.SCINet import SCINet
 from models.SCINet_decompose import SCINet_decompose
 
-def UncertaintyLoss(logits, groundtruths):
+"""
+class MultiLossLayer():
+  def __init__(self, loss_list):
+    self._loss_list = loss_list
+    self._sigmas_sq = []
+    for i in range(len(self._loss_list)):
+      self._sigmas_sq.append(slim.variable('Sigma_sq_' + str(i), dtype=tf.float32, shape=[], initializer=tf.initializers.random_uniform(minval=0.2, maxval=1)))
+
+  def get_loss(self):
+    factor = tf.div(1.0, tf.multiply(2.0, self._sigmas_sq[0]))
+    loss = tf.add(tf.multiply(factor, self._loss_list[0]), tf.log(self._sigmas_sq[0]))
+    for i in range(1, len(self._sigmas_sq)):
+      factor = tf.div(1.0, tf.multiply(2.0, self._sigmas_sq[i]))
+      loss = tf.add(loss, tf.add(tf.multiply(factor, self._loss_list[i]), tf.log(self._sigmas_sq[i])))
+    return loss
+"""
+
+def UncertaintyLoss(logits, groundtruths, tensor1, tensor2, tensor3):
     loss1 = nn.MSELoss()
-    MSE = loss1(logits, groundtruths)
-    outputOnlyMask = torch.zeros_like(logits,  dtype=torch.bool)
-    logitsShapeList = list(logits.shape)
+    MSERes = loss1(logits, groundtruths)
+    absLogits = nn.functional.relu(logits)
+    outputOnlyMask = torch.zeros_like(absLogits,  dtype=torch.bool)
+    logitsShapeList = list(absLogits.shape)
     for i in range(logitsShapeList[0]):
         for j in range(logitsShapeList[1]):
             outputOnlyMask[i,j,-1] = True
-    logitsOutputOnly = torch.masked_select(logits, outputOnlyMask)
+    logitsOutputOnly = torch.masked_select(absLogits, outputOnlyMask)
     groundtruthsOutputOnly = torch.masked_select(groundtruths, outputOnlyMask)
     winningMask = torch.ge(groundtruthsOutputOnly, logitsOutputOnly)
     logitsProfitOnly = torch.masked_select(logitsOutputOnly, winningMask)
     profit = torch.sum(logitsProfitOnly)
     winningMaskFloat = winningMask.float()
     winningRate = torch.mean(winningMaskFloat)
+    factor1 = torch.div(1.0, torch.mul(2.0, tensor1))
+    lossfinal1 = torch.add(torch.multiply(factor1, MSERes), torch.log(factor1))
+    factor2 = torch.div(1.0, torch.mul(2.0, tensor2))
+    lossfinal2 = torch.add(torch.multiply(factor2, torch.subtract(1,winningRate)), torch.log(factor2))
+    factor3 = torch.div(1.0, torch.mul(2.0, tensor3))
+    lossfinal3 = torch.add(torch.multiply(factor3, torch.subtract(0,profit)), torch.log(factor3))
     print(f"winningRate: {winningRate.detach().numpy()}")
     print(f"profit: {profit.detach().numpy()}")
     print(f"logitsOutputOnly shape: {logitsOutputOnly.shape}")
     print(f"logits shape: {logits.shape}")
     print(f"ground_truths shape: {groundtruths.shape}")
-    return MSE
+    return torch.add(torch.add(lossfinal1, lossfinal2),lossfinal3)
+
 """
 class UncertaintyLoss():
     def get_loss(logits, ground_truths):
@@ -80,6 +105,15 @@ class UncertaintyLoss():
 class Exp_ETTh(Exp_Basic):
     def __init__(self, args):
         super(Exp_ETTh, self).__init__(args)
+        empty1 = torch.empty(1)
+        empty2 = torch.empty(1)
+        empty3 = torch.empty(1)
+        nn.init.uniform(empty1, a = 0.2, b = 1)
+        nn.init.uniform(empty2, a = 0.2, b = 1)
+        nn.init.uniform(empty3, a = 0.2, b = 1)
+        tensorLoss1 = nn.Parameter(empty1)
+        tensorLoss2 = nn.Parameter(empty2)
+        tensorLoss3 = nn.Parameter(empty3)
     def _build_model(self):
 
         if self.args.features == 'S':
@@ -299,7 +333,10 @@ class Exp_ETTh(Exp_Basic):
                 valid_data, batch_x, batch_y)
 
             if self.args.stacks == 1:
-                loss = criterion(pred.detach().cpu(), true.detach().cpu())
+                if(self.args.loss == "UncertaintyLoss"):
+                    loss = criterion(pred.detach().cpu(), true.detach().cpu(), self.tensorLoss1, self.tensorLoss2,self.tensorLoss3)
+                else:
+                    loss = criterion(pred.detach().cpu(), true.detach().cpu())
 
                 preds.append(pred.detach().cpu().numpy())
                 trues.append(true.detach().cpu().numpy())
@@ -307,7 +344,10 @@ class Exp_ETTh(Exp_Basic):
                 true_scales.append(true_scale.detach().cpu().numpy())
 
             elif self.args.stacks == 2:
-                loss = criterion(pred.detach().cpu(), true.detach().cpu()) + criterion(mid.detach().cpu(), true.detach().cpu())
+                if(self.args.loss == "UncertaintyLoss"):
+                    loss = criterion(pred.detach().cpu(), true.detach().cpu(), self.tensorLoss1, self.tensorLoss2,self.tensorLoss3)
+                else:
+                    loss = criterion(pred.detach().cpu(), true.detach().cpu())
 
                 preds.append(pred.detach().cpu().numpy())
                 trues.append(true.detach().cpu().numpy())
@@ -407,9 +447,15 @@ class Exp_ETTh(Exp_Basic):
                     train_data, batch_x, batch_y)
 
                 if self.args.stacks == 1:
-                    loss = criterion(pred, true)
+                    if(self.args.loss == "UncertaintyLoss"):
+                        loss = criterion(pred, true, self.tensorLoss1, self.tensorLoss2,self.tensorLoss3)
+                    else:
+                        loss = criterion(pred, true)
                 elif self.args.stacks == 2:
-                    loss = criterion(pred, true) + criterion(mid, true)
+                    if(self.args.loss == "UncertaintyLoss"):
+                        loss = criterion(pred, true, self.tensorLoss1, self.tensorLoss2,self.tensorLoss3) + criterion(mid, true, self.tensorLoss1, self.tensorLoss2,self.tensorLoss3)
+                    else:
+                        loss = criterion(pred, true) + criterion(mid, true)
                 else:
                     print('Error!')
 
