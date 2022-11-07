@@ -18,6 +18,14 @@ from models.SCINet import SCINet
 from models.SCINet_decompose import SCINet_decompose
 
 def UncertaintyLoss(logits, ground_truths):
+    MSE = nn.MSELoss(logits, ground_truths)
+    outputOnlyMask = torch.zeros_like(logits)
+    logitsShapeList = list(logits.shape)
+    for i in range(logitsShapeList[0]):
+        for j in range(logitsShapeList[1]):
+            outputOnlyMask[i,j,-1] = 1
+    logitsOutputOnly = torch.masked_select(outputOnlyMask)
+    print(f"logitsOutputOnly shape: {logitsOutputOnly.shape}")
     print(f"logits shape: {logits.shape}")
     print(f"ground_truths shape: {ground_truths.shape}")
     return 0
