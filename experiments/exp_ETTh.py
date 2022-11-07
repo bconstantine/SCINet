@@ -25,7 +25,7 @@ def UncertaintyLoss(logits, ground_truths):
     for i in range(logitsShapeList[0]):
         for j in range(logitsShapeList[1]):
             outputOnlyMask[i,j,-1] = 1
-    logitsOutputOnly = torch.masked_select(outputOnlyMask)
+    logitsOutputOnly = torch.masked_select(logits, outputOnlyMask)
     print(f"logitsOutputOnly shape: {logitsOutputOnly.shape}")
     print(f"logits shape: {logits.shape}")
     print(f"ground_truths shape: {ground_truths.shape}")
