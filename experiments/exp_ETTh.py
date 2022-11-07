@@ -111,9 +111,9 @@ class Exp_ETTh(Exp_Basic):
         nn.init.uniform(empty1, a = 0.2, b = 1)
         nn.init.uniform(empty2, a = 0.2, b = 1)
         nn.init.uniform(empty3, a = 0.2, b = 1)
-        tensorLoss1 = nn.Parameter(empty1)
-        tensorLoss2 = nn.Parameter(empty2)
-        tensorLoss3 = nn.Parameter(empty3)
+        self.tensorLoss1 = nn.Parameter(empty1)
+        self.tensorLoss2 = nn.Parameter(empty2)
+        self.tensorLoss3 = nn.Parameter(empty3)
     def _build_model(self):
 
         if self.args.features == 'S':
