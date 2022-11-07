@@ -334,7 +334,7 @@ class Exp_ETTh(Exp_Basic):
 
             if self.args.stacks == 1:
                 if(self.args.loss == "UncertaintyLoss"):
-                    loss = criterion(pred.detach().cpu(), true.detach().cpu(), self.tensorLoss1, self.tensorLoss2,self.tensorLoss3)
+                    loss = criterion(pred.detach().cpu(), true.detach().cpu(), self.tensorLoss1.detach().cpu(), self.tensorLoss2.detach().cpu(),self.tensorLoss3.detach().cpu())
                 else:
                     loss = criterion(pred.detach().cpu(), true.detach().cpu())
 
@@ -345,7 +345,7 @@ class Exp_ETTh(Exp_Basic):
 
             elif self.args.stacks == 2:
                 if(self.args.loss == "UncertaintyLoss"):
-                    loss = criterion(pred.detach().cpu(), true.detach().cpu(), self.tensorLoss1, self.tensorLoss2,self.tensorLoss3)
+                    loss = criterion(pred.detach().cpu(), true.detach().cpu(), self.tensorLoss1.detach().cpu(), self.tensorLoss2.detach().cpu(),self.tensorLoss3.detach().cpu())
                 else:
                     loss = criterion(pred.detach().cpu(), true.detach().cpu())
 
