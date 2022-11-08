@@ -77,7 +77,7 @@ class WinningRateReversed(nn.Module):
 
 class ProfitReversed(nn.Module):
     def __init__(self):
-        super(Profit, self).__init__()
+        super(ProfitReversed, self).__init__()
     
     def forward(self, x, y):
         x = torch.flatten(x)
