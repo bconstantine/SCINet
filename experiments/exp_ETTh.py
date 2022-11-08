@@ -56,9 +56,9 @@ class Loss1(nn.Module):
 
         return loss
 
-class WinningRate(nn.Module):
+class WinningRateReversed(nn.Module):
     def __init__(self):
-        super(WinningRate, self).__init__()
+        super(WinningRateReversed, self).__init__()
     
     def forward(self, x, y):
         x = torch.flatten(x)
@@ -73,8 +73,26 @@ class WinningRate(nn.Module):
                 count += 1
         
         loss = count  / x.shape[0]
-        return loss
+        return (1-loss)
 
+class ProfitReversed(nn.Module):
+    def __init__(self):
+        super(Profit, self).__init__()
+    
+    def forward(self, x, y):
+        x = torch.flatten(x)
+        y = torch.flatten(y)
+
+        profit = 0
+        count = 0
+
+        for i in range(0, x.shape[0]):
+            if x[i] < y[i]:
+                #count MAE Partially only when predicted is bigger than y
+                profit += x[i]
+        
+        
+        return -profit
 """
 class Profit(nn.Module):
     def __init__(self):
@@ -211,8 +229,9 @@ class Exp_ETTh(Exp_Basic):
         self.tensorLoss1 = nn.Parameter(empty1)
         self.tensorLoss2 = nn.Parameter(empty2)
         self.tensorLoss3 = nn.Parameter(empty3)
-        self.winningRateItem = WinningRate()
+        self.winningRateItem = WinningRateReversed()
         self.loss1Item = Loss1()
+        self.profitItem = ProfitReversed()
     def _build_model(self):
 
         if self.args.features == 'S':
@@ -409,9 +428,17 @@ class Exp_ETTh(Exp_Basic):
             criterion = nn.MSELoss()
         elif losstype == "mae":
             criterion = nn.L1Loss()
-        elif losstype == "UncertaintyLoss":
+        elif losstype == "UncertaintyLoss(Loss1)":
             #print("Custom loss function1")
             #criterion = UncertaintyLoss
+            print("Custom loss function class")
+            criterion = UncertaintyLoss(2)
+        elif losstype == "UncertaintyLoss(WinningRate)":
+            #print("Custom loss function1")
+            #criterion = UncertaintyLoss
+            print("Custom loss function class")
+            criterion = UncertaintyLoss(2)
+        elif losstype == "UncertaintyLoss(Profit)":
             print("Custom loss function class")
             criterion = UncertaintyLoss(2)
         else:
@@ -434,14 +461,26 @@ class Exp_ETTh(Exp_Basic):
                 valid_data, batch_x, batch_y)
 
             if self.args.stacks == 1:
-                if(self.args.loss == "UncertaintyLoss"):
+                if(self.args.loss == "UncertaintyLoss(Loss1)"):
                     #loss = criterion(pred.detach().cpu(), true.detach().cpu(), self.tensorLoss1.detach().cpu(), self.tensorLoss2.detach().cpu(),self.tensorLoss3.detach().cpu())
                     loss1Res = self.loss1Item(pred.detach().cpu(), true.detach().cpu())
                     a = nn.MSELoss()
                     MSERes = a(pred.detach().cpu(), true.detach().cpu())
                     
                     loss = criterion(loss1Res, MSERes)
+                elif(self.args.loss == "UncertaintyLoss(WinningRate)"):
+                    #loss = criterion(pred.detach().cpu(), true.detach().cpu(), self.tensorLoss1.detach().cpu(), self.tensorLoss2.detach().cpu(),self.tensorLoss3.detach().cpu())
+                    loss1Res = self.winningRateItem(pred.detach().cpu(), true.detach().cpu())
+                    a = nn.MSELoss()
+                    MSERes = a(pred.detach().cpu(), true.detach().cpu())
                     
+                    loss = criterion(loss1Res, MSERes)
+                elif(self.args.loss == "UncertaintyLoss(Profit)"):
+                    loss1Res = self.profitItem(pred.detach().cpu(), true.detach().cpu())
+                    a = nn.MSELoss()
+                    MSERes = a(pred.detach().cpu(), true.detach().cpu())
+                    
+                    loss = criterion(loss1Res, MSERes)
                 else:
                     loss = criterion(pred.detach().cpu(), true.detach().cpu())
 
@@ -451,13 +490,32 @@ class Exp_ETTh(Exp_Basic):
                 true_scales.append(true_scale.detach().cpu().numpy())
 
             elif self.args.stacks == 2:
-                if(self.args.loss == "UncertaintyLoss"):
+                if(self.args.loss == "UncertaintyLoss(Loss1)"):
                     #loss = criterion(pred.detach().cpu(), true.detach().cpu(), self.tensorLoss1.detach().cpu(), self.tensorLoss2.detach().cpu(),self.tensorLoss3.detach().cpu())
                     loss1Res = self.loss1Item(pred.detach().cpu(), true.detach().cpu())
                     a = nn.MSELoss()
                     MSERes = a(pred.detach().cpu(), true.detach().cpu())
                     
                     loss1Mid = self.loss1Item(mid.detach().cpu(), true.detach().cpu())
+                    b = nn.MSELoss()
+                    MSEMid = b(mid.detach().cpu(), true.detach().cpu())
+                    loss = criterion(loss1Res, MSERes) + criterion(loss1Mid, MSEMid)
+                elif(self.args.loss == "UncertaintyLoss(WinningRate)"):
+                    #loss = criterion(pred.detach().cpu(), true.detach().cpu(), self.tensorLoss1.detach().cpu(), self.tensorLoss2.detach().cpu(),self.tensorLoss3.detach().cpu())
+                    loss1Res = self.winningRateItem(pred.detach().cpu(), true.detach().cpu())
+                    a = nn.MSELoss()
+                    MSERes = a(pred.detach().cpu(), true.detach().cpu())
+                    
+                    loss1Mid = self.winningRateItem(mid.detach().cpu(), true.detach().cpu())
+                    b = nn.MSELoss()
+                    MSEMid = b(mid.detach().cpu(), true.detach().cpu())
+                    loss = criterion(loss1Res, MSERes) + criterion(loss1Mid, MSEMid)
+                elif(self.args.loss == "UncertaintyLoss(Profit)"):
+                    loss1Res = self.profitItem(pred.detach().cpu(), true.detach().cpu())
+                    a = nn.MSELoss()
+                    MSERes = a(pred.detach().cpu(), true.detach().cpu())
+                    
+                    loss1Mid = self.profitItem(mid.detach().cpu(), true.detach().cpu())
                     b = nn.MSELoss()
                     MSEMid = b(mid.detach().cpu(), true.detach().cpu())
                     loss = criterion(loss1Res, MSERes) + criterion(loss1Mid, MSEMid)
@@ -562,7 +620,7 @@ class Exp_ETTh(Exp_Basic):
                     train_data, batch_x, batch_y)
 
                 if self.args.stacks == 1:
-                    if(self.args.loss == "UncertaintyLoss"):
+                    if(self.args.loss == "UncertaintyLoss(Loss1)"):
                         #loss = criterion(pred, true, self.tensorLoss1, self.tensorLoss2,self.tensorLoss3)
 
                         loss1Res = self.loss1Item(pred, true)
@@ -570,16 +628,46 @@ class Exp_ETTh(Exp_Basic):
                         MSERes = a(pred, true)
                         
                         loss = criterion(loss1Res, MSERes)
+                    elif(self.args.loss == "UncertaintyLoss(WinningRate)"):
+                        loss1Res = self.winningRateItem(pred, true)
+                        a = nn.MSELoss()
+                        MSERes = a(pred, true)
+                        
+                        loss = criterion(loss1Res, MSERes)
+                    elif(self.args.loss == "UncertaintyLos(Profit)"):
+                        loss1Res = self.profitItem(pred, true)
+                        a = nn.MSELoss()
+                        MSERes = a(pred, true)
+                        
+                        loss = criterion(loss1Res, MSERes)
                     else:
                         loss = criterion(pred, true)
                 elif self.args.stacks == 2:
-                    if(self.args.loss == "UncertaintyLoss"):
+                    if(self.args.loss == "UncertaintyLoss(Loss1)"):
                         #loss = criterion(pred, true, self.tensorLoss1, self.tensorLoss2,self.tensorLoss3) + criterion(mid, true, self.tensorLoss1, self.tensorLoss2,self.tensorLoss3)
                         loss1Res = self.loss1Item(pred, true)
                         a = nn.MSELoss()
                         MSERes = a(pred, true)
                         
                         loss1Mid = self.loss1Item(mid, true)
+                        b = nn.MSELoss()
+                        MSEMid = b(mid, true)
+                        loss = criterion(loss1Res, MSERes) + criterion(loss1Mid, MSEMid)
+                    elif(self.args.loss == "UncertaintyLoss(WinningRate)"):
+                        loss1Res = self.winningRateItem(pred, true)
+                        a = nn.MSELoss()
+                        MSERes = a(pred, true)
+                        
+                        loss1Mid = self.winningRateItem(mid, true)
+                        b = nn.MSELoss()
+                        MSEMid = b(mid, true)
+                        loss = criterion(loss1Res, MSERes) + criterion(loss1Mid, MSEMid)
+                    elif(self.args.loss == "UncertaintyLoss(Profit)"):
+                        loss1Res = self.profitItem(pred, true)
+                        a = nn.MSELoss()
+                        MSERes = a(pred, true)
+                        
+                        loss1Mid = self.profitItem(mid, true)
                         b = nn.MSELoss()
                         MSEMid = b(mid, true)
                         loss = criterion(loss1Res, MSERes) + criterion(loss1Mid, MSEMid)
