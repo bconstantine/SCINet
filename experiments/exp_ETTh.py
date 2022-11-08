@@ -39,6 +39,7 @@ class Loss1(nn.Module):
         super(Loss1, self).__init__()
     
     def forward(self, x, y):
+        print(f"x.shape {x.shape}")
         x = torch.flatten(x)
         y = torch.flatten(y)
 
@@ -73,6 +74,27 @@ class WinningRate(nn.Module):
         
         loss = count  / x.shape[0]
         return loss
+
+"""
+class Profit(nn.Module):
+    def __init__(self):
+        super(WinningRate, self).__init__()
+    
+    def forward(self, x, y):
+        x = torch.flatten(x)
+        y = torch.flatten(y)
+
+        loss = 0
+        count = 0
+
+        for i in range(0, x.shape[0]):
+            if x[i] < y[i]:
+                #count MAE Partially only when predicted is bigger than y
+                count += 1
+        
+        loss = count  / x.shape[0]
+        return loss
+"""
 
 class UncertaintyLoss(nn.Module):
     def __init__ (self, v_num):
@@ -136,6 +158,7 @@ def UncertaintyLossFunc(logits, groundtruths, tensor1, tensor2, tensor3):
     print(f"logits shape: {logits.shape}")
     print(f"ground_truths shape: {groundtruths.shape}")
     return torch.add(torch.add(lossfinal1, lossfinal2),lossfinal3)
+
 
 """
 class UncertaintyLoss():
