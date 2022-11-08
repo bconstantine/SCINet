@@ -450,7 +450,7 @@ class Exp_ETTh(Exp_Basic):
             else:
                 print('Error!')
 
-            total_loss.append(loss)
+            total_loss.append(loss.item())
         total_loss = np.average(total_loss)
 
         if self.args.stacks == 1:
