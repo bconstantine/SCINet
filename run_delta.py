@@ -184,7 +184,7 @@ mse_ = []
 mses_ = []
 
 if args.evaluate:
-    setting = '{}_winsize{}_predlen{}_loss{}'.format(args.model,args.seqlen, args.pred_len, args.loss)
+    setting = '{}_winsize{}_predlen{}_loss{}'.format(args.model,args.seq_len, args.pred_len, args.loss)
     exp = Exp(args)  # set experiments
     print('>>>>>>>testing : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
     mae, maes, mse, mses = exp.test(setting, evaluate=True)
@@ -194,7 +194,7 @@ else:
         for ii in range(args.itr):
             # setting record of experiments
             #setting = '{}_{}_ft{}_sl{}_ll{}_pl{}_lr{}_bs{}_hid{}_s{}_l{}_dp{}_inv{}_itr{}'.format(args.model,args.data, args.features, args.seq_len, args.label_len, args.pred_len,args.lr,args.batch_size,args.hidden_size,args.stacks, args.levels,args.dropout,args.inverse,ii)
-            setting = '{}_winsize{}_predlen{}_loss{}'.format(args.model,args.seqlen, args.pred_len, args.loss)
+            setting = '{}_winsize{}_predlen{}_loss{}'.format(args.model,args.seq_len, args.pred_len, args.loss)
 
             exp = Exp(args)  # set experiments
             print('>>>>>>>start training : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(setting))
@@ -214,7 +214,7 @@ else:
         print('Final min denormed mse:{:.4f}, mae:{:.4f}'.format(min(mses_), min(maes_)))
     else:
         #setting = '{}_{}_ft{}_sl{}_ll{}_pl{}_lr{}_bs{}_hid{}_s{}_l{}_dp{}_inv{}_itr0'.format(args.model,args.data, args.features, args.seq_len, args.label_len, args.pred_len,args.lr,args.batch_size,args.hidden_size,args.stacks, args.levels,args.dropout,args.inverse)
-        setting = '{}_winsize{}_predlen{}_loss{}'.format(args.model,args.seqlen, args.pred_len, args.loss)
+        setting = '{}_winsize{}_predlen{}_loss{}'.format(args.model,args.seq_len, args.pred_len, args.loss)
 
         exp = Exp(args)  # set experiments
         print('>>>>>>>start training : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(setting))
