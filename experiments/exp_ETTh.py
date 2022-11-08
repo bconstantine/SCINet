@@ -539,7 +539,8 @@ class Exp_ETTh(Exp_Basic):
                         #loss = criterion(pred, true, self.tensorLoss1, self.tensorLoss2,self.tensorLoss3)
 
                         loss1Res = self.loss1Item(pred, true)
-                        MSERes = nn.MSELoss(pred, true)
+                        a = nn.MSELoss()
+                        MSERes = a(pred, true)
                         
                         loss = criterion(loss1Res, MSERes)
                     else:
@@ -547,11 +548,13 @@ class Exp_ETTh(Exp_Basic):
                 elif self.args.stacks == 2:
                     if(self.args.loss == "UncertaintyLoss"):
                         #loss = criterion(pred, true, self.tensorLoss1, self.tensorLoss2,self.tensorLoss3) + criterion(mid, true, self.tensorLoss1, self.tensorLoss2,self.tensorLoss3)
-                        loss1Res = self.loss1Item(pred.detach().cpu(), true.detach().cpu())
-                        MSERes = nn.MSELoss(pred, true)
+                        loss1Res = self.loss1Item(pred, true)
+                        a = nn.MSELoss()
+                        MSERes = a(pred, true)
                         
                         loss1Mid = self.loss1Item(mid, true)
-                        MSEMid = nn.MSELoss(mid, true)
+                        b = nn.MSELoss()
+                        MSEMid = b(mid, true)
                         loss = criterion(loss1Res, MSERes) + criterion(loss1Mid, MSEMid)
                     else:
                         loss = criterion(pred, true) + criterion(mid, true)
