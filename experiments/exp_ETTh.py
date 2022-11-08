@@ -50,7 +50,8 @@ class Loss1(nn.Module):
                 #count MAE Partially only when predicted is bigger than y
                 loss += abs(y[i] - x[i])
                 count += 1
-        loss = loss / count
+        if(count != 0):
+            loss = loss / count
 
         return loss
 
