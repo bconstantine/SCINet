@@ -52,7 +52,7 @@ parser.add_argument('--save', type=bool, default =False, help='save the output r
 parser.add_argument('--model_name', type=str, default='SCINet')
 parser.add_argument('--resume', type=bool, default=False)
 parser.add_argument('--evaluate', type=bool, default=False)
-parser.add_argument('--set_type', type=int,default=1, help='scinet mode for choosing dataset')
+parser.add_argument('--pattern_type', type=int,default=1, help='scinet mode for choosing dataset')
 
 ### -------  model settings --------------  
 parser.add_argument('--hidden-size', default=1, type=float, help='hidden channel of module')

@@ -183,7 +183,7 @@ class Dataset_ETT_minute(Dataset):
 class Dataset_Custom(Dataset):
     def __init__(self, root_path, flag='train', size=None, 
                  features='S', data_path='ETTh1.csv', 
-                 target='price', scale=True, inverse=False, timeenc=0, freq='h', cols=None, set_type = 1):
+                 target='price', scale=True, inverse=False, timeenc=0, freq='h', cols=None, pattern_type = 1):
         # size [seq_len, label_len, pred_len]
         # info
         if size == None:
@@ -208,7 +208,7 @@ class Dataset_Custom(Dataset):
         self.cols=cols
         self.root_path = root_path
         self.data_path = data_path
-        self.set_type = set_type
+        self.pattern_type = pattern_type
         self.__read_data__()
 
     def __read_data__(self):
@@ -216,7 +216,6 @@ class Dataset_Custom(Dataset):
         df_raw = pd.read_csv(os.path.join(self.root_path,
                                           self.data_path))
         print(f"whole shape = {df_raw.shape}")
-        print(f"used type = {self.set_type}")
 
         '''
         df_raw.columns: ['date', ...(other features), target feature]
@@ -239,7 +238,7 @@ class Dataset_Custom(Dataset):
         num_vali = 42+(6-(42-self.pred_len+1)%6)
         num_train = len(df_raw) - num_vali - num_test
 
-        if self.set_type == 2:
+        if self.pattern_type == 2:
             num_train = int(len(df_raw)*0.7)
             num_test = int(len(df_raw)*0.2)
             num_vali = len(df_raw) - num_train - num_test
@@ -297,7 +296,7 @@ class Dataset_Custom(Dataset):
     
     def __getitem__(self, index):
         #print(f"used type = {self.set_type}")
-        if self.set_type == 2:
+        if self.pattern_type == 2:
             index = index - (index%6)
             s_begin = index
             s_end = s_begin + self.seq_len
@@ -323,8 +322,9 @@ class Dataset_Custom(Dataset):
     
     def __len__(self):
         #print(f"used type = {self.set_type}")
-        if self.set_type == 2:
-            return len(self.data_x) - self.seq_len + 1
+        if(self.pattern_type == 2):
+            if self.set_type == 2:
+                return len(self.data_x) - self.seq_len + 1
         return len(self.data_x) - self.seq_len- self.pred_len + 1
 
     def inverse_transform(self, data):
