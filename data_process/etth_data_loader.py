@@ -239,8 +239,10 @@ class Dataset_Custom(Dataset):
         num_train = len(df_raw) - num_vali - num_test
 
         if self.pattern_type == 2:
+            #num_train = int(len(df_raw)*0.7)
+            #num_test = int(len(df_raw)*0.2)
             num_train = int(len(df_raw)*0.7)
-            num_test = int(len(df_raw)*0.2)
+            num_test = 186
             num_vali = len(df_raw) - num_train - num_test
 
             train_res = int(num_train)%6
