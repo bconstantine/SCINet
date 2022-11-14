@@ -183,7 +183,7 @@ class Dataset_ETT_minute(Dataset):
 class Dataset_Custom(Dataset):
     def __init__(self, root_path, flag='train', size=None, 
                  features='S', data_path='ETTh1.csv', 
-                 target='price', scale=True, inverse=False, timeenc=0, freq='h', cols=None):
+                 target='price', scale=True, inverse=False, timeenc=0, freq='h', cols=None, set_type = 1):
         # size [seq_len, label_len, pred_len]
         # info
         if size == None:
@@ -208,6 +208,7 @@ class Dataset_Custom(Dataset):
         self.cols=cols
         self.root_path = root_path
         self.data_path = data_path
+        self.set_type = set_type
         self.__read_data__()
 
     def __read_data__(self):
@@ -215,6 +216,8 @@ class Dataset_Custom(Dataset):
         df_raw = pd.read_csv(os.path.join(self.root_path,
                                           self.data_path))
         print(f"whole shape = {df_raw.shape}")
+        print(f"used type = {self.set_type}")
+
         '''
         df_raw.columns: ['date', ...(other features), target feature]
         '''
@@ -228,18 +231,18 @@ class Dataset_Custom(Dataset):
             cols.remove('date')
         df_raw = df_raw[['date']+cols+[self.target]]
         print(f"len of df raw = {len(df_raw)}")
-        num_train = int(len(df_raw)*0.7)
-        num_test = int(len(df_raw)*0.2)
-        num_vali = len(df_raw) - num_train - num_test
 
-        
-        
-        #num_test = 186+(6-(186-self.pred_len+1)%6) #180 - pred len(6) + 1 = 175, since batch size = 175 not completely divisible by batch size, 
+        num_test = 186+(6-(186-self.pred_len+1)%6) #180 - pred len(6) + 1 = 175, since batch size = 175 not completely divisible by batch size, 
                                                    #we add 5 extra data, so that it becomes 185
                                                    #so that 185 - pred len(6) + 1 = 180, completely divisible by batch size (6)
         
-        #num_vali = 42+(6-(42-self.pred_len+1)%6)
-        #num_train = len(df_raw) - num_vali - num_test
+        num_vali = 42+(6-(42-self.pred_len+1)%6)
+        num_train = len(df_raw) - num_vali - num_test
+
+        if self.set_type == 2:
+            num_train = int(len(df_raw)*0.7)
+            num_test = int(len(df_raw)*0.2)
+            num_vali = len(df_raw) - num_train - num_test
 
         #error: tuple index out of range
         #num_test = 180 + 6 - (180 % 6)
@@ -289,7 +292,9 @@ class Dataset_Custom(Dataset):
         print(f"inside etth_data_loader len of data_stamp: {len(self.data_stamp)}")
     
     def __getitem__(self, index):
-        index = index - (index%6)
+        print(f"used type = {self.set_type}")
+        if self.set_type == 2:
+            index = index - (index%6)
         s_begin = index
         s_end = s_begin + self.seq_len
         r_begin = s_end - self.label_len 
@@ -303,6 +308,9 @@ class Dataset_Custom(Dataset):
         return seq_x, seq_y, seq_x_mark, seq_y_mark
     
     def __len__(self):
+        print(f"used type = {self.set_type}")
+        if self.set_type == 2:
+            return len(self.data_x) - self.seq_len + 1
         return len(self.data_x) - self.seq_len- self.pred_len + 1
 
     def inverse_transform(self, data):

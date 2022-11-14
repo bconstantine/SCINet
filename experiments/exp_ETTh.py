@@ -439,7 +439,8 @@ class Exp_ETTh(Exp_Basic):
             inverse=args.inverse,
             timeenc=timeenc,
             freq=freq,
-            cols=args.cols
+            cols=args.cols,
+            set_type = self.args.set_type
         )
         print(flag, len(data_set)) 
         data_loader = DataLoader(
