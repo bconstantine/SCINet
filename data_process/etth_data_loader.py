@@ -244,6 +244,14 @@ class Dataset_Custom(Dataset):
             num_test = int(len(df_raw)*0.2)
             num_vali = len(df_raw) - num_train - num_test
 
+            train_res = int(num_train)%6
+            test_res = int(num_test)%6
+            val_res = int(num_val)%6
+
+            num_train -= train_res
+            num_test -= test_res
+            num_vali -= val_res
+
         #error: tuple index out of range
         #num_test = 180 + 6 - (180 % 6)
         #num_vali = 42 + 6 - (42 % 6)
@@ -295,15 +303,25 @@ class Dataset_Custom(Dataset):
         print(f"used type = {self.set_type}")
         if self.set_type == 2:
             index = index - (index%6)
-        s_begin = index
-        s_end = s_begin + self.seq_len
-        r_begin = s_end - self.label_len 
-        r_end = r_begin + self.pred_len + self.label_len
+            s_begin = index
+            s_end = s_begin + self.seq_len
+            r_begin = s_end
+            r_end = r_begin + self.pred_len
 
-        seq_x = self.data_x[s_begin:s_end]
-        seq_y = self.data_y[r_begin:r_end]
-        seq_x_mark = self.data_stamp[s_begin:s_end]
-        seq_y_mark = self.data_stamp[r_begin:r_end]
+            seq_x = self.data_x[s_begin:s_end]
+            seq_y = self.data_y[r_begin:r_end]
+            seq_x_mark = self.data_stamp[s_begin:s_end]
+            seq_y_mark = self.data_stamp[r_begin:r_end]
+        else:
+            s_begin = index
+            s_end = s_begin + self.seq_len
+            r_begin = s_end - self.label_len 
+            r_end = r_begin + self.pred_len + self.label_len
+
+            seq_x = self.data_x[s_begin:s_end]
+            seq_y = self.data_y[r_begin:r_end]
+            seq_x_mark = self.data_stamp[s_begin:s_end]
+            seq_y_mark = self.data_stamp[r_begin:r_end]
 
         return seq_x, seq_y, seq_x_mark, seq_y_mark
     
