@@ -237,7 +237,7 @@ class Dataset_Custom(Dataset):
                                                    #so that 185 - pred len(6) + 1 = 180, completely divisible by batch size (6)
         
         #num_vali = 42+(6-(42-self.pred_len+1)%6)
-        num_train = 186
+        num_test = 186
         num_vali = 42
         num_train = len(df_raw) - num_vali - num_test
 
