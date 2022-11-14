@@ -246,7 +246,7 @@ class Dataset_Custom(Dataset):
 
             train_res = int(num_train)%6
             test_res = int(num_test)%6
-            val_res = int(num_val)%6
+            val_res = int(num_vali)%6
 
             num_train -= train_res
             num_test -= test_res
