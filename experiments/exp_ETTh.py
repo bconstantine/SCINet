@@ -440,7 +440,7 @@ class Exp_ETTh(Exp_Basic):
             timeenc=timeenc,
             freq=freq,
             cols=args.cols,
-            set_type = self.args.pattern_type
+            pattern_type = self.args.pattern_type
         )
         print(flag, len(data_set)) 
         data_loader = DataLoader(
