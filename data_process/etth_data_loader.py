@@ -257,10 +257,6 @@ class Dataset_Custom(Dataset):
         #num_vali = 42 + 6 - (42 % 6)
         #num_train = len(df_raw)- num_test - num_vali
 
-        print(num_test)
-        print(num_vali)
-        print(num_train)
-
         print(f"inside etth_data_loader train,test,vali: {num_train},{num_test}, {num_vali}")
         border1s = [0, num_train-self.seq_len, len(df_raw)-num_test-self.seq_len]
         border2s = [num_train, num_train+num_vali, len(df_raw)]
@@ -300,7 +296,7 @@ class Dataset_Custom(Dataset):
         print(f"inside etth_data_loader len of data_stamp: {len(self.data_stamp)}")
     
     def __getitem__(self, index):
-        print(f"used type = {self.set_type}")
+        #print(f"used type = {self.set_type}")
         if self.set_type == 2:
             index = index - (index%6)
             s_begin = index
@@ -326,7 +322,7 @@ class Dataset_Custom(Dataset):
         return seq_x, seq_y, seq_x_mark, seq_y_mark
     
     def __len__(self):
-        print(f"used type = {self.set_type}")
+        #print(f"used type = {self.set_type}")
         if self.set_type == 2:
             return len(self.data_x) - self.seq_len + 1
         return len(self.data_x) - self.seq_len- self.pred_len + 1
