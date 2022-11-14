@@ -228,18 +228,18 @@ class Dataset_Custom(Dataset):
             cols.remove('date')
         df_raw = df_raw[['date']+cols+[self.target]]
         print(f"len of df raw = {len(df_raw)}")
-        #num_train = int(len(df_raw)*0.7)
-        #num_test = int(len(df_raw)*0.2)
-        #num_vali = len(df_raw) - num_train - num_test
+        num_train = int(len(df_raw)*0.7)
+        num_test = int(len(df_raw)*0.2)
+        num_vali = len(df_raw) - num_train - num_test
 
-        num_test = 186+(6-(186-self.pred_len+1)%6) #180 - pred len(6) + 1 = 175, since batch size = 175 not completely divisible by batch size, 
+        
+        
+        #num_test = 186+(6-(186-self.pred_len+1)%6) #180 - pred len(6) + 1 = 175, since batch size = 175 not completely divisible by batch size, 
                                                    #we add 5 extra data, so that it becomes 185
                                                    #so that 185 - pred len(6) + 1 = 180, completely divisible by batch size (6)
         
-        num_vali = 42+(6-(42-self.pred_len+1)%6)
-        #num_test = 186
-        #num_vali = 42
-        num_train = len(df_raw) - num_vali - num_test
+        #num_vali = 42+(6-(42-self.pred_len+1)%6)
+        #num_train = len(df_raw) - num_vali - num_test
 
         #error: tuple index out of range
         #num_test = 180 + 6 - (180 % 6)
@@ -289,7 +289,7 @@ class Dataset_Custom(Dataset):
         print(f"inside etth_data_loader len of data_stamp: {len(self.data_stamp)}")
     
     def __getitem__(self, index):
-        #index = index - (index%6)
+        index = index - (index%6)
         s_begin = index
         s_end = s_begin + self.seq_len
         r_begin = s_end - self.label_len 
