@@ -289,7 +289,7 @@ class Dataset_Custom(Dataset):
         print(f"inside etth_data_loader len of data_stamp: {len(self.data_stamp)}")
     
     def __getitem__(self, index):
-        #index = index - (index%6)
+        index = index - (index%6)
         s_begin = index
         s_end = s_begin + self.seq_len
         r_begin = s_end - self.label_len 
