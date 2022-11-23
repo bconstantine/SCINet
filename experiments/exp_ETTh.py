@@ -294,7 +294,7 @@ class Exp_ETTh(Exp_Basic):
                 in_dim = 11
             elif self.args.data == 'July_High_Correlation_Table_July' or self.args.data == 'July_High_Correlation_Table_CUT_July':
                 in_dim = 8
-            elif self.args.data == 'ALL_TEMP' or self.args.data == 'ALL_CUT_TEMP' or self.args.data == 'ALL_TEMP_WIND_OCTOBER':
+            elif self.args.data == 'ALL_TEMP' or self.args.data == 'ALL_CUT_TEMP' or self.args.data == 'ALL_TEMP_OCTOBER':
                 in_dim = 18
             elif self.args.data == 'July_High_Correlation_Table_TEMP' or self.args.data == 'July_High_Correlation_Table_CUT_TEMP':
                 in_dim = 9
@@ -418,7 +418,7 @@ class Exp_ETTh(Exp_Basic):
             'July_High_Correlation_Table_CUT_TEMP_WIND': Dataset_Custom,
             'August_High_Correlation_TEMP_WIND': Dataset_Custom, 
             'August_High_Correlation_TEMP': Dataset_Custom,
-            'ALL_TEMP_WIND_OCTOBER': Dataset_Custom,
+            'ALL_TEMP_OCTOBER': Dataset_Custom,
         }
         Data = data_dict[self.args.data]
         timeenc = 0 if args.embed!='timeF' else 1
