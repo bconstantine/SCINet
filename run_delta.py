@@ -129,7 +129,7 @@ data_parser = {
     'August_High_Correlation_TEMP': {'data': 'DCL_transform_1025_cut_August_High_Correlation.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
     'August_High_Correlation_TEMP_WIND': {'data': 'DCL_transform_1101_cut_August_High_Correlation.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
 
-    'ALL_TEMP_WIND_OCTOBER': {'data': 'DCL_transform_1122_cut_ALL_CUT_TEMP.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    'ALL_TEMP_OCTOBER': {'data': 'DCL_transform_1122_cut_ALL_CUT_TEMP.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
 
 
     # 'ALL': {'data': 'DCL_transform_1008_edited_ALL.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
