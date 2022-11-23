@@ -444,7 +444,8 @@ class Exp_ETTh(Exp_Basic):
             timeenc=timeenc,
             freq=freq,
             cols=args.cols,
-            pattern_type = self.args.pattern_type
+            pattern_type = self.args.pattern_type,
+            batchSize = self.args.batch_size
         )
         print(flag, len(data_set)) 
         data_loader = DataLoader(

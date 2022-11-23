@@ -183,7 +183,7 @@ class Dataset_ETT_minute(Dataset):
 class Dataset_Custom(Dataset):
     def __init__(self, root_path, flag='train', size=None, 
                  features='S', data_path='ETTh1.csv', 
-                 target='price', scale=True, inverse=False, timeenc=0, freq='h', cols=None, pattern_type = 1):
+                 target='price', scale=True, inverse=False, timeenc=0, freq='h', cols=None, pattern_type = 1, batchSize = 6):
         # size [seq_len, label_len, pred_len]
         # info
         if size == None:
@@ -209,6 +209,7 @@ class Dataset_Custom(Dataset):
         self.root_path = root_path
         self.data_path = data_path
         self.pattern_type = pattern_type
+        self.batchSize = batchSize
         self.__read_data__()
 
     def __read_data__(self):
@@ -231,7 +232,7 @@ class Dataset_Custom(Dataset):
         df_raw = df_raw[['date']+cols+[self.target]]
         print(f"len of df raw = {len(df_raw)}")
 
-        num_test = 180+(6-(180-self.pred_len+1)%6   ) #180 - pred len(6) + 1 = 175, since batch size = 175 not completely divisible by batch size, 
+        num_test = 180+(self.batchSize-(180-self.pred_len+1)%self.batchSize  ) #180 - pred len(6) + 1 = 175, since batch size = 175 not completely divisible by batch size, 
                                                    #we add 5 extra data, so that it becomes 185
                                                    #so that 185 - pred len(6) + 1 = 180, completely divisible by batch size (6)
         
