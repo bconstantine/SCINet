@@ -1,4 +1,4 @@
-Delivery Start,EFA,Cleared Volume,EU Gas,gen_EFA,demand_EFA,gap,day_of_week,weekday_or_holiday,day_sin,day_cos,month_sin,month_cos,EFA_sin,EFA_cos,DW_sin,DW_cos,Average Temperature,price
+date,EFA,Cleared Volume,EU Gas,gen_EFA,demand_EFA,gap,day_of_week,weekday_or_holiday,day_sin,day_cos,month_sin,month_cos,EFA_sin,EFA_cos,DW_sin,DW_cos,Average Temperature,price
 2022/3/31 23:00,1,514,319.9,27859.0,27848.8125,10.1875,4,1,-2.45e-16,1.0,1.0,6.12e-17,0.866025404,0.5,-0.433883739,-0.900968868,0.0,1.7
 2022/4/1 03:00,2,507,319.9,31574.25,31416.66667,157.5833333,4,1,0.20129852,0.979529941,0.866025404,-0.5,0.866025404,-0.5,-0.433883739,-0.900968868,0.0,8.96
 2022/4/1 07:00,3,495,319.9,35715.5,35762.02083,-46.52083333,4,1,0.20129852,0.979529941,0.866025404,-0.5,1.22e-16,-1.0,-0.433883739,-0.900968868,0.75,4.89
