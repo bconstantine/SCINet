@@ -231,7 +231,7 @@ class Dataset_Custom(Dataset):
         df_raw = df_raw[['date']+cols+[self.target]]
         print(f"len of df raw = {len(df_raw)}")
 
-        num_test = 180+(6-(180-self.pred_len+1)%6) #180 - pred len(6) + 1 = 175, since batch size = 175 not completely divisible by batch size, 
+        num_test = 180+(6-(180-self.pred_len+1)%6   ) #180 - pred len(6) + 1 = 175, since batch size = 175 not completely divisible by batch size, 
                                                    #we add 5 extra data, so that it becomes 185
                                                    #so that 185 - pred len(6) + 1 = 180, completely divisible by batch size (6)
         
