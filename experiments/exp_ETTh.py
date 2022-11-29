@@ -304,7 +304,7 @@ class Exp_ETTh(Exp_Basic):
                 in_dim = 10
             elif self.args.data == 'August_High_Correlation_TEMP_WIND':
                 in_dim = 10
-            elif self.args.data == 'August_High_Correlation_TEMP':
+            elif self.args.data == 'August_High_Correlation_TEMP' or self.args.data == "August_High_Correlation_TEMP_OCTOBER" or self.args.data == "August_High_Correlation_TEMP_SEPTEMBER":
                 in_dim = 9
             # in_dim = 22
             # if self.args.data == 'ALL' or self.args.data == 'ALL_CUT':
