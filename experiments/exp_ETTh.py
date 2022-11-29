@@ -422,6 +422,8 @@ class Exp_ETTh(Exp_Basic):
             'ALL_TEMP_SEPTEMBER':Dataset_Custom, 
             'ALL_TEMP_WIND_OCTOBER': Dataset_Custom,
             'ALL_TEMP_WIND_SEPTEMBER':Dataset_Custom, 
+            'August_High_Correlation_TEMP_SEPTEMBER':Dataset_Custom,
+            'August_High_Correlation_TEMP_OCTOBER':Dataset_Custom,
         }
         Data = data_dict[self.args.data]
         timeenc = 0 if args.embed!='timeF' else 1
