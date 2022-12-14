@@ -136,6 +136,7 @@ data_parser = {
     'ALL_TEMP_WIND_SEPTEMBER':{'data': 'DCL_transform_1122_cut_ALL_CUT_TEMP_WIND_SEPTEMBER.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
     'August_High_Correlation_TEMP_SEPTEMBER':{'data':'DCL_transform_1122_cut_August_High_Correlation_September.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
     'August_High_Correlation_TEMP_OCTOBER':{'data':'DCL_transform_1122_cut_August_High_Correlation.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
+    "August_High_Correlation_TEMP_NOVEMBER":{'data':'DCL_transform_1213_temperature.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]}
     # 'ALL': {'data': 'DCL_transform_1008_edited_ALL.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
     # 'No_MonthSinCos': {'data': 'DCL_transform_1008_edited_No_MonthSinCos.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]}, 
     # 'No_EFA_MonthSinCos': {'data': 'DCL_transform_1008_edited_No_EFA_MonthSinCos.csv', 'T': 'price', 'M': [7, 7, 7], 'S': [1, 1, 1], 'MS': [7, 7, 1]},
